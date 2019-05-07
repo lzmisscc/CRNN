@@ -1,11 +1,12 @@
 # Pytorch_CRNN
 
-基于深度学习的端到端文字识别
+[基于深度学习的端到端文字识别](https://github.com/AstarLight/Lets_OCR)
 
 ## 环境
 
 ***Pytorch 0.40 + Python3.6 + warp-ctc***
-***提示：安装warp-ctc请不要使用conda可能安装失败***
+
+***提示：安装warp-ctc请不要使用conda安装pytorch可能安装失败***
 
 CTC安装：
 
@@ -74,4 +75,6 @@ python infer.py
 我也随机在一些文档图片、发票扫描图像上截取了一段文字图像送入我们该模型进行识别，识别效果也挺好的，基本识别正确，表明模型泛化能力很强。
 
 
-具体实现细节可以参考博客：https://www.cnblogs.com/skyfsm/p/10345305.html
+具体实现细节可以参考[博客](https://www.cnblogs.com/skyfsm/p/10345305.html)
+
+[Code原地址](https://github.com/AstarLight/Lets_OCR)
