@@ -12,9 +12,9 @@ import Config
 
 os.environ['CUDA_VISIBLE_DEVICES'] = "0"
 
-crnn_model_path = './w160_bs64_model/netCRNN_4_48000.pth'
-IMG_ROOT = '/home/lz/cd_data/cropline1/'
-GT_TXT = '/home/lz/cd_data/cropline1.txt'
+crnn_model_path = './model_h5/netCRNN_3190_180.pth'
+IMG_ROOT = '/home/lz/cd_data/cropline2/'
+GT_TXT = '/home/lz/cd_data/cropline2.txt'
 running_mode = 'gpu'
 alphabet = alphabets.alphabet
 nclass = len(alphabet) + 1

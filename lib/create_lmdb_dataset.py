@@ -105,8 +105,12 @@ def read(path, txt):
 
 
 if __name__ == '__main__':
+    
     OUT_PATH = '/home/lz/PycharmProjects/OCR/recognizer/crnn/CRNN_DATA/train_lmdb/'
     OUT_PATH2 = '/home/lz/PycharmProjects/OCR/recognizer/crnn/CRNN_DATA/test_lmdb/'
+    
+    IN_PATH3 = '/home/lz/chinese_dataset/labels.txt'
+    PREFIX3 = '/home/lz/chinese_dataset/images/'
 
     IN_PATH = "/home/lz/cd_data/cropline1.txt"
     PREFIX = "/home/lz/cd_data/cropline1/"
@@ -114,5 +118,5 @@ if __name__ == '__main__':
     IN_PATH2 = "/home/lz/cd_data/cropline2.txt"
     PREFIX2 = "/home/lz/cd_data/cropline2/"
 
-    gen_lmdb([OUT_PATH, OUT_PATH2], [PREFIX, PREFIX2], [IN_PATH, IN_PATH2])
+    gen_lmdb([OUT_PATH, OUT_PATH2], [PREFIX3, PREFIX, PREFIX2], [IN_PATH3, IN_PATH, IN_PATH2])
     pass

@@ -130,8 +130,9 @@ if __name__ == '__main__':
     net = Net.CRNN(n_class)
     print(net)
     # 加载权重
-    net.load_state_dict(torch.load('model_h5/netCRNN_69_40.pth'))
-    net.apply(lib.utility.weights_init)
+    net.load_state_dict(torch.load('model_h5/netCRNN_1596_180.pth'))
+    # 权重初始化
+    # net.apply(lib.utility.weights_init)
 
     image = torch.FloatTensor(Config.batch_size, 3, Config.img_height, Config.img_width)
     text = torch.IntTensor(Config.batch_size * 5)
@@ -178,9 +179,9 @@ if __name__ == '__main__':
             #     torch.save(
             #         net.state_dict(), '{0}/netCRNN_{1}_{2}.pth'.format(Config.model_dir, epoch, i))
         
-        if epoch % 2 == 0:
+        if epoch % 200 == 0:
             val(net, test_dataset, criterion)
 
-        if epoch % 4 == 0:
+        if epoch % 1000 == 0:
             torch.save(
                 net.state_dict(), '{0}/netCRNN_{1}_{2}.pth'.format(Config.model_dir, epoch, i))
