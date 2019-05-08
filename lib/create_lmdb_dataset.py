@@ -3,9 +3,7 @@ import cv2
 import numpy as np
 import os
 
-OUT_PATH = '/home/lz/PycharmProjects/OCR/recognizer/crnn/CRNN_DATA/test_lmdb/'
-IN_PATH = "/home/lz/cd_data/cropline2.txt"
-PREFIX = "/home/lz/cd_data/cropline2"
+
 
 
 def checkImageIsValid(imageBin):
@@ -45,7 +43,8 @@ def createDataset(outputPath, imagePathList, labelList, lexiconList=None, checkV
     cache = {}
     cnt = 1
     for i in range(nSamples):
-        imagePath = os.path.join(PREFIX, imagePathList[i]).split()[0].replace('\n', '').replace('\r\n', '')
+        # imagePath = os.path.join(PREFIX, imagePathList[i]).split()[0].replace('\n', '').replace('\r\n', '')
+        imagePath = imagePathList[i]
         print(imagePath)
         label = ''.join(labelList[i])
         print(label)
@@ -79,25 +78,41 @@ def createDataset(outputPath, imagePathList, labelList, lexiconList=None, checkV
     print('Created dataset with %d samples' % nSamples)
 
 
-def gen_lmdb():
-    outputPath = OUT_PATH
-    if not os.path.exists(OUT_PATH):
-        os.mkdir(OUT_PATH)
-    imgdata = open(IN_PATH)
-    imagePathList = list(imgdata)
+def gen_lmdb(outputPath, imgPath, txtPath):
+    imagePathList, labelList = [],[]
+    for x1,x2 in zip(imgPath, txtPath):
+        y1,y2 = read(x1,x2)
+        imagePathList += y1
+        labelList += y2
+    for _ in outputPath:
+        if not os.path.exists(_):
+            os.mkdir(_)
+    createDataset(outputPath[0], imagePathList, labelList)
+    createDataset(outputPath[1], imagePathList[-1000:], labelList[-1000:])
 
+def read(path, txt):
+    imgdata = open(txt)
+    imagePathList = list(imgdata)
+    imagePath = []
     labelList = []
     for line in imagePathList:
         word = line.split(" ", 1)[1].replace(' ', '')
         # word = "".join(line.split(" ", 1)[1].split(" "))
         # print("word", word)
         labelList.append(word.strip('\n').replace('\r', '').replace('\t', ''))
-    createDataset(outputPath, imagePathList, labelList)
+        imagePath.append(path+line.split(" ", 1)[0].replace(' ', ''))
+    return imagePath, labelList
 
 
 if __name__ == '__main__':
-    gen_lmdb()
     OUT_PATH = '/home/lz/PycharmProjects/OCR/recognizer/crnn/CRNN_DATA/train_lmdb/'
+    OUT_PATH2 = '/home/lz/PycharmProjects/OCR/recognizer/crnn/CRNN_DATA/test_lmdb/'
+
     IN_PATH = "/home/lz/cd_data/cropline1.txt"
-    PREFIX = "/home/lz/cd_data/cropline1"
-    gen_lmdb()
+    PREFIX = "/home/lz/cd_data/cropline1/"
+    
+    IN_PATH2 = "/home/lz/cd_data/cropline2.txt"
+    PREFIX2 = "/home/lz/cd_data/cropline2/"
+
+    gen_lmdb([OUT_PATH, OUT_PATH2], [PREFIX, PREFIX2], [IN_PATH, IN_PATH2])
+    pass
